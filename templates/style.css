@@ -1,0 +1,310 @@
+:root {
+    --primary-gold: #FFD700;
+    --secondary-gold: #DAA520;
+    --dark-blue: #1E3A8A;
+    --light-blue: #3B82F6;
+    --success-green: #059669;
+    --warning-orange: #D97706;
+    --danger-red: #DC2626;
+    --background-light: #F3F4F6;
+}
+
+body {
+    background-color: var(--background-light);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.navbar {
+    background: linear-gradient(135deg, var(--dark-blue) 0%, var(--light-blue) 100%);
+    padding: 1rem 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.card {
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.price-card {
+    background: linear-gradient(135deg, var(--primary-gold) 0%, var(--secondary-gold) 100%);
+    color: white;
+}
+
+.prediction-card {
+    background: linear-gradient(135deg, var(--success-green) 0%, #10B981 100%);
+    color: white;
+}
+
+.prediction-form {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.form-label {
+    font-weight: 500;
+    color: var(--dark-blue);
+}
+
+.form-control {
+    border-radius: 10px;
+    border: 2px solid #E5E7EB;
+    padding: 10px 15px;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: var(--light-blue);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--light-blue) 0%, var(--dark-blue) 100%);
+    border: none;
+    padding: 12px 25px;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.custom-prediction {
+    background: linear-gradient(135deg, var(--light-blue) 0%, var(--dark-blue) 100%);
+    color: white;
+}
+
+.accuracy-badge {
+    font-size: 0.9em;
+    padding: 8px 15px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    margin-top: 10px;
+    font-weight: 500;
+}
+
+.date-display {
+    font-size: 0.9em;
+    opacity: 0.9;
+    margin-top: 5px;
+    font-weight: 500;
+}
+
+.input-description {
+    font-size: 0.85em;
+    color: #6B7280;
+    margin-top: 5px;
+    font-style: italic;
+}
+
+.card-title {
+    font-weight: 600;
+    color: var(--dark-blue);
+    margin-bottom: 1.5rem;
+}
+
+.market-factor-card {
+    border-left: 4px solid var(--light-blue);
+    transition: all 0.3s ease;
+}
+
+.market-factor-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.market-factor-card.primary {
+    border-left-color: var(--primary-gold);
+}
+
+.market-factor-card .badge {
+    font-size: 0.85em;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-weight: 500;
+}
+
+.market-factor-card .card-text {
+    font-size: 0.9em;
+    color: #4B5563;
+    margin-bottom: 1rem;
+}
+
+.market-factor-card .text-muted {
+    font-size: 0.85em;
+}
+
+.market-factor-card .fw-bold {
+    color: var(--dark-blue);
+}
+
+.badge {
+    padding: 6px 12px;
+    font-weight: 500;
+    border-radius: 20px;
+}
+
+.badge-primary {
+    background-color: var(--light-blue);
+}
+
+.badge-secondary {
+    background-color: #6B7280;
+}
+
+.badge-danger {
+    background-color: var(--danger-red);
+}
+
+.badge-warning {
+    background-color: var(--warning-orange);
+}
+
+.badge-success {
+    background-color: var(--success-green);
+}
+
+.badge-info {
+    background-color: var(--light-blue);
+}
+
+.section-title {
+    color: var(--dark-blue);
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--light-blue);
+}
+
+.display-4 {
+    font-weight: 700;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.chart-container {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.market-context {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 15px;
+    margin-top: 15px;
+}
+
+.market-context .current-price,
+.market-context .market-condition,
+.market-context .price-change {
+    padding: 10px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.market-context .fw-bold {
+    font-size: 1.2em;
+    color: var(--primary-gold);
+}
+
+.market-context .badge {
+    font-size: 0.9em;
+    padding: 8px 15px;
+}
+
+.market-context .text-success {
+    color: var(--success-green) !important;
+}
+
+.market-context .text-danger {
+    color: var(--danger-red) !important;
+}
+
+.market-context small {
+    font-size: 0.8em;
+    opacity: 0.8;
+}
+
+.prediction-detail {
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.prediction-detail h6 {
+    color: #6c757d;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+}
+
+.prediction-detail h3, .prediction-detail h4 {
+    margin: 0;
+    font-weight: 600;
+    font-size: 1.4rem;
+}
+
+.custom-prediction {
+    border: none;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.custom-prediction .card-body {
+    padding: 25px;
+}
+
+/* Prediction Results Price Change */
+#priceChange {
+    font-weight: 600;
+    font-size: 1.4rem;
+    padding: 8px 15px;
+    border-radius: 8px;
+    display: inline-block;
+}
+
+#priceChange.price-change-positive {
+    color: #00b894 !important;
+    background-color: rgba(0, 184, 148, 0.1);
+}
+
+#priceChange.price-change-negative {
+    color: #d63031 !important;
+    background-color: rgba(214, 48, 49, 0.1);
+}
+
+#marketCondition {
+    font-weight: 600;
+    font-size: 1.4rem;
+    padding: 8px 15px;
+    border-radius: 8px;
+    display: inline-block;
+}
+
+#marketCondition.market-condition-bullish {
+    color: #00b894 !important;
+    background-color: rgba(0, 184, 148, 0.1);
+}
+
+#marketCondition.market-condition-bearish {
+    color: #d63031 !important;
+    background-color: rgba(214, 48, 49, 0.1);
+} 

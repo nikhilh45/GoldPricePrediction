@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gold Price Prediction</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-coins me-2"></i> Gold Price Prediction
+            </a>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card price-card">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Current Gold Price</h5>
+                        <h2 class="display-4">${{ "%.2f"|format(market_data.gold_price) }}</h2>
+                        <div class="date-display">
+                            <i class="fas fa-clock me-2"></i>As of {{ market_data.date }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card price-card">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Predicted Gold Price</h5>
+                        <h2 class="display-4">${{ "%.2f"|format(prediction) }}</h2>
+                        <div class="date-display">
+                            <i class="fas fa-chart-line me-2"></i>Model Accuracy: {{ "%.2f"|format(accuracy) }}%
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Custom Prediction Form -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="prediction-form">
+                    <h3 class="section-title">Make Your Prediction</h3>
+                    <form id="predictionForm">
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label for="selectedDate" class="form-label">
+                                    <i class="fas fa-calendar-alt me-2"></i>Select Date
+                                </label>
+                                <input type="date" class="form-control" id="selectedDate" name="selectedDate" required>
+                                <div class="input-description">Choose a date for prediction</div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="silverPrice" class="form-label">
+                                    <i class="fas fa-coins me-2"></i>Silver Price ($)
+                                </label>
+                                <input type="number" step="0.01" class="form-control" id="silverPrice" required>
+                                <div class="input-description">Current silver price per ounce</div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="usdIndex" class="form-label">
+                                    <i class="fas fa-dollar-sign me-2"></i>USD Index
+                                </label>
+                                <input type="number" step="0.01" class="form-control" id="usdIndex" required>
+                                <div class="input-description">Value of USD against major currencies</div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label for="inflationRate" class="form-label">
+                                    <i class="fas fa-chart-line me-2"></i>Inflation Rate (%)
+                                </label>
+                                <input type="number" step="0.01" class="form-control" id="inflationRate" required>
+                                <div class="input-description">Current inflation rate</div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="interestRate" class="form-label">
+                                    <i class="fas fa-percentage me-2"></i>Interest Rate (%)
+                                </label>
+                                <input type="number" step="0.01" class="form-control" id="interestRate" required>
+                                <div class="input-description">Current interest rate</div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="sp500Index" class="form-label">
+                                    <i class="fas fa-chart-bar me-2"></i>S&P 500 Index
+                                </label>
+                                <input type="number" step="0.01" class="form-control" id="sp500Index" required>
+                                <div class="input-description">Current S&P 500 value</div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label for="oilPrice" class="form-label">
+                                    <i class="fas fa-gas-pump me-2"></i>Oil Price ($)
+                                </label>
+                                <input type="number" step="0.01" class="form-control" id="oilPrice" required>
+                                <div class="input-description">Current oil price per barrel</div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="geopoliticalRisk" class="form-label">
+                                    <i class="fas fa-globe-americas me-2"></i>Geopolitical Risk Index
+                                </label>
+                                <input type="number" class="form-control" id="geopoliticalRisk" required>
+                                <div class="input-description">Current geopolitical risk level (0-500)</div>
+                            </div>
+                            <div class="col-md-4 mb-3 d-flex align-items-end">
+                                <button type="submit" class="btn btn-primary w-100">
+                                    <i class="fas fa-magic me-2"></i>Predict Gold Price
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="customPrediction" class="card custom-prediction mt-3" style="display: none;">
+                        <div class="card-body">
+                            <h5 class="card-title text-center mb-4">Prediction Results</h5>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="prediction-detail">
+                                        <h6>Predicted Gold Price</h6>
+                                        <h3 class="text-primary" id="customPredictionValue">$0.00</h3>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="prediction-detail">
+                                        <h6>Model Accuracy</h6>
+                                        <h3 class="text-success" id="customPredictionAccuracy">0%</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-4">
+                                <div class="col-md-6">
+                                    <div class="prediction-detail">
+                                        <h6>Market Condition</h6>
+                                        <h4 id="marketCondition">-</h4>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="prediction-detail">
+                                        <h6>Price Change</h6>
+                                        <h4 id="priceChange">-</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Historical Price Chart -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="chart-container">
+                    <h3 class="section-title">Historical Price Chart</h3>
+                    <div id="historicalPlot"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feature Importance Chart -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="chart-container">
+                    <h3 class="section-title">Feature Importance</h3>
+                    <div id="featureImportancePlot"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Market Factors -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="chart-container">
+                    <h3 class="section-title">Market Factors</h3>
+                    <div class="row">
+                        {% for factor in factors %}
+                        <div class="col-md-6 mb-3">
+                            <div class="card market-factor-card h-100 {% if factor.importance == 'Primary' %}primary{% endif %}">
+                                <div class="card-body">
+                                    <h6 class="card-title d-flex justify-content-between align-items-center">
+                                        {{ factor.name }}
+                                        {% if factor.importance == 'Primary' %}
+                                        <span class="badge badge-primary">Primary</span>
+                                        {% else %}
+                                        <span class="badge badge-secondary">Secondary</span>
+                                        {% endif %}
+                                    </h6>
+                                    <p class="card-text">{{ factor.description }}</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="text-muted">Current Value:</span>
+                                        <span class="fw-bold">{{ factor.current_value }}</span>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center mt-2">
+                                        <span class="text-muted">Trend:</span>
+                                        <span class="badge {% if factor.trend == 'Strongly Up' %}badge-success{% elif factor.trend == 'Up' %}badge-info{% elif factor.trend == 'Strongly Down' %}badge-danger{% elif factor.trend == 'Down' %}badge-warning{% else %}badge-secondary{% endif %}">
+                                            {{ factor.trend }}
+                                        </span>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center mt-2">
+                                        <span class="text-muted">Impact:</span>
+                                        <span class="badge {% if factor.current_impact == 'High' %}badge-danger{% else %}badge-warning{% endif %}">
+                                            {{ factor.current_impact }}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const historicalPlotData = '{{ historical_plot|safe }}';
+        const featureImportancePlotData = '{{ feature_importance_plot|safe }}';
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
+</body>
+</html> 
