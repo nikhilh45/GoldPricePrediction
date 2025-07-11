@@ -38,9 +38,3 @@ The script will:
 4. Show a plot of actual vs predicted prices
 5. Display feature importance
 6. Provide a prediction for tomorrow's gold price
-
-
-
-## Note
-
-This is a basic implementation for educational purposes. Real-world trading decisions should not be based solely on this model's predictions. 
